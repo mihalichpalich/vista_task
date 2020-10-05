@@ -1,15 +1,28 @@
-import React, {useState}from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Table, TableHead, TableRow, TableCell, TableBody} from "@material-ui/core";
 
 import styles from "./styles";
-import {PatientsListsTableItem} from "../../../components";
+import {PresentListTableItem} from "../../../components";
+import {PatientsContext} from "../../../flux/context";
 
 const useStyles = makeStyles(styles);
 
 const PresentList = () => {
-    const classes = useStyles();
+    const {presentList, makeViewActive, loadPatientInfo} = useContext(PatientsContext);
     const [selected, setSelected] = useState(null);
+    const classes = useStyles();
+
+    useEffect(() => {
+       if (selected) {
+           makeViewActive()
+       }
+    }, [selected]);
+
+    const onSelect = (value, patientInfo) => {
+        setSelected(value);
+        loadPatientInfo(patientInfo)
+    };
 
     return (
         <Table>
@@ -28,14 +41,17 @@ const PresentList = () => {
             </TableHead>
 
             <TableBody>
-                <PatientsListsTableItem value="0" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="1" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="2" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="3" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="4" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="5" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="6" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="7" selected={selected} onChange={setSelected}/>
+                {presentList ?
+                    (presentList.map((item, index) => (
+                        <PresentListTableItem
+                            key={index}
+                            value={index}
+                            selected={selected}
+                            onSelect={onSelect}
+                            item={item}
+                        />
+                    ))) : null
+                }
             </TableBody>
         </Table>
     );

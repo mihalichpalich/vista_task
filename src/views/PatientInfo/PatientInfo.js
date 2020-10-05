@@ -1,27 +1,28 @@
-import React, {useState} from 'react';
-import {Paper, Typography, Box} from '@material-ui/core';
+import React, {useContext} from 'react';
+import {Paper, Typography} from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 
 import styles from "./styles";
 import {PatientInfoTable} from "../../components";
+import {PatientsContext} from "../../flux/context";
 
 const useStyles = makeStyles(styles);
 
 const PatientInfo = () => {
+    const {viewActive, patientInfo} = useContext(PatientsContext);
     const classes = useStyles();
-    const [itemActive, setItemActive] = useState(false);
 
     return (
         <Paper
             variant="outlined"
             square
-            className={`${classes.viewWrapper} ${itemActive ?? classes.viewWrapperActive}`}
+            className={`${classes.viewWrapper} ${viewActive ? classes.viewWrapperActive : null}`}
         >
             <Typography variant="h2" className={classes.patientInfoTitle}>
                 Информация о пациенте
             </Typography>
 
-            <PatientInfoTable/>
+            <PatientInfoTable patientInfo={patientInfo}/>
         </Paper>
     );
 };

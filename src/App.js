@@ -2,12 +2,15 @@ import React from 'react';
 import {CssBaseline} from "@material-ui/core";
 
 import MainPage from "./pages/MainPage/MainPage";
+import {Provider} from "./flux/provider";
 
 const App = () => {
     return (
-        <CssBaseline>
-            <MainPage/>
-        </CssBaseline>
+        <Provider>
+            <CssBaseline>
+                <MainPage/>
+            </CssBaseline>
+        </Provider>
     );
 };
 

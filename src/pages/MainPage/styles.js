@@ -1,6 +1,6 @@
 export default () => ({
     container: {
-        height: "100%",
+        minHeight: "100%",
         padding: "2vh 0.5vw",
         background: "lightgrey"
     },

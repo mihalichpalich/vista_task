@@ -1,4 +1,7 @@
 export default () => ({
+    patientInfoItemTableRow: {
+        display: 'flex'
+    },
     patientInfoItemTableCell: {
         padding: '10px 0 0 0',
         display: 'inline-block'

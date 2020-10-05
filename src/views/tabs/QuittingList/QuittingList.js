@@ -1,15 +1,28 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {Table, TableHead, TableRow, TableCell, TableBody} from "@material-ui/core";
 
 import styles from "./styles";
-import {PatientsListsTableItem} from "../../../components";
+import {QuittingListTableItem} from "../../../components";
+import {PatientsContext} from "../../../flux/context";
 
 const useStyles = makeStyles(styles);
 
-const PresentList = () => {
-    const classes = useStyles();
+const QuittingList = () => {
+    const {quittingList, makeViewActive, loadPatientInfo} = useContext(PatientsContext);
     const [selected, setSelected] = useState(null);
+    const classes = useStyles();
+
+    useEffect(() => {
+        if (selected) {
+            makeViewActive()
+        }
+    }, [selected]);
+
+    const onSelect = (value, patientInfo) => {
+        setSelected(value);
+        loadPatientInfo(patientInfo)
+    };
 
     return (
         <Table>
@@ -28,17 +41,20 @@ const PresentList = () => {
             </TableHead>
 
             <TableBody>
-                <PatientsListsTableItem value="0" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="1" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="2" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="3" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="4" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="5" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="6" selected={selected} onChange={setSelected}/>
-                <PatientsListsTableItem value="7" selected={selected} onChange={setSelected}/>
+                {quittingList ?
+                    (quittingList.map((item, index) => (
+                        <QuittingListTableItem
+                            key={index}
+                            value={index}
+                            selected={selected}
+                            onSelect={onSelect}
+                            item={item}
+                        />
+                    ))) : null
+                }
             </TableBody>
         </Table>
     );
 };
 
-export default PresentList;
+export default QuittingList;

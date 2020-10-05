@@ -1,6 +1,6 @@
 export default () => ({
     viewWrapper: {
-        height: "100%",
+        minHeight: "96vh",
         borderBottom: '2px solid rgba(0, 0, 0, 0.12)'
     },
     viewWrapperActive: {
