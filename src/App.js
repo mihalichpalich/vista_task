@@ -1,8 +1,13 @@
 import React from 'react';
+import {CssBaseline} from "@material-ui/core";
+
+import MainPage from "./pages/MainPage/MainPage";
 
 const App = () => {
     return (
-        <h1>Hello world!</h1>
+        <CssBaseline>
+            <MainPage/>
+        </CssBaseline>
     );
 };
 
